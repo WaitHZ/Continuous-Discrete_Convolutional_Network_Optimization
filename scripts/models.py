@@ -405,10 +405,7 @@ class PreTrainModel(nn.Module):
         return x
 
 
-    def save_parameters(self):
-        """
-            Preserve the pretrained model parameters, except the last added MLP
-        """
-        torch.save(self.embedding.state_dict(), './para/embedding')
+    def save_parameters(self, root='./para/'):
+        torch.save(self.embedding.state_dict(), root+'embedding')
         for i, layer in enumerate(self.layers):
-            torch.save(layer.state_dict(), f'./para/layer {i}')
+            torch.save(layer.state_dict(), root+f'layer {i}')
