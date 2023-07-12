@@ -6,7 +6,7 @@ import torch.nn.functional as F
 from datasets import FoldDataset
 from torch_geometric.loader import DataLoader
 
-from models_new import Model
+from models import Model
 
 from DynamicDrawer import DynamicDrawer
 
