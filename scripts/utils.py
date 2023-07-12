@@ -32,7 +32,7 @@ def sim_loss(res: torch.Tensor, T=2.0) -> torch.Tensor:
     loss = torch.tensor(0, device=device)
 
     for i in range(mat.shape[0]):
-        den = (torch.exp(mat[i]) / T).sum()
+        den = (torch.exp(mat[i]) / T).sum() - torch.exp(mat[i, i]) / T
         loss = loss - torch.log(torch.exp(mat[i][(i+mat.shape[0]//2)%mat.shape[0]])/T/den)
 
-    return loss
+    return loss / mat.shape[0]
