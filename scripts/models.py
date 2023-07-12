@@ -1,3 +1,15 @@
+"""
+Our code refers to the code provided in the following article:
+
+@inproceedings{fan2023cdconv,
+  title={Continuous-Discrete Convolution for Geometry-Sequence Modeling in Proteins},
+  author={Hehe Fan and Zhangyang Wang and Yi Yang and Mohan Kankanhalli},
+  booktitle={The Eleventh International Conference on Learning Representations},
+  year={2023}
+}
+"""
+
+
 from typing import List
 
 import torch
