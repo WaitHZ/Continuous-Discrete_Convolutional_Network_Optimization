@@ -7,7 +7,7 @@ import utils
 from torch_geometric.loader import DataLoader
 
 
-device = torch.device('cuda:3' if torch.cuda.is_available() else 'cpu')
+device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 
 
 num_epochs = 20
