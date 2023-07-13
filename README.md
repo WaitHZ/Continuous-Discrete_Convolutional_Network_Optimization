@@ -39,7 +39,7 @@ pip install torch_scatter torch_sparse -f https://data.pyg.org/whl/torch-1.13.1+
 
 ## Run
 
-The commands below are based on you being in the scripts directory.
+The commands below are based on you being in the scripts directory, remember to download and decompress the dataset in fold and ec.
 
 Pre-train:
 
