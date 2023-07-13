@@ -35,7 +35,7 @@ def train(epoch, dataloader):
         data=data.to(device)
         optimizer.zero_grad()
         tmp = net(data)
-        loss = F.cross_entropy(tmp.log_softmax(dim=-1), data.y)
+        loss = F.nll_loss(tmp.log_softmax(dim=-1), data.y)
         loss.backward()
         torch.nn.utils.clip_grad_norm_(net.parameters(), 10)
         optimizer.step()
