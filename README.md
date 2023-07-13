@@ -4,13 +4,15 @@ This project is based on the use of [continuous-discrete convolutional networks]
 
 First, we use the EC data set to pre-train the protein structure classification task through comparative learning, expecting to improve the effect of the neural network on the protein structure classification on the fold data set. Specifically, in the experiment, we randomly deleted 10% of the amino acids from the original protein in the EC and formed a positive and negative data pair with the original protein, used CDconv to perform pre-training encoding, and then extracted the encoding information through MLP, but did not perform classification tasks , iteratively updates the network parameters by minimizing the encoded information difference between positive and negative data pairs. The parameters trained on the EC protein dataset are used to initialize the parameters of the classification task of the fold dataset.
 
-![pre_train](./img/pre_train.png)
+![pre_train](./imgs/pre_train.png)
 
-其次，我们尝试改进模型的框架，并行运行不同规模的CDconv，以在理解蛋白质氨基酸序列时灵活调整离散卷积核覆盖范围。具体而言，对于原论文代码实现中的Basic Block，我们将其中的l=5的CDconv模块改成了l=5，7，11的三个并行的CDconv模块，整个模块重命名为Branch Block。实验表明这种改进可以在迭代刚开始时取得较大的改进，但随着神经网络训练的进行，最终效果逐渐与原来的网络相似。这说明基于蛋白质序列顺序的离散卷积核覆盖范围的大小与神经网络最终的编码效果关联度不高。
+Second, we try to improve the framework of the model by running CDconv with different scales in parallel to flexibly adjust the discrete convolution kernel coverage when understanding protein amino acid sequences. Specifically, for the Basic Block in the code implementation of the original paper, we changed the CDconv module with l=5 into three parallel CDconv modules with l=5, 7, and 11, and renamed the whole module as Branch Block. Experiments show that this improvement can achieve a large improvement at the beginning of the iteration, but with the training of the neural network, the final effect is gradually similar to the original network. This shows that the size of the discrete convolution kernel coverage based on the protein sequence order is not highly related to the final encoding effect of the neural network.
 
-***[配图：branch block 结构图]***
+![branch block](./imgs/brach_block.png)
 
-最后，我们通过实验求证论文中的结论——深度学习神经网络对蛋白质结构的理解主要基于中心的氨基酸。我们猜测这个结论的得出有可能跟论文代码实现中的图神经网络中消息传递的聚合函数设置为'sum'相关，'sum'会导致周围点数较多的氨基酸的特征编码值较大，而中心氨基酸周围的氨基酸点数一般比边缘点周围的氨基酸点数多，这就会使得中心点特征编码值相较于边缘点的特征编码值更大，也即激活值更高，造成神经网络理解蛋白质主要基于蛋白质中心氨基酸的现象。我们将这里的聚合函数设置为'mean'后重新训练网络、绘制激活值函数，以此来探索人为设置聚合函数对神经网络理解蛋白质的影响。***--------waiting***
+Finally, we verified the conclusion in the paper through experiments—the deep learning neural network's understanding of protein structure is mainly based on the central amino acid. We guess that this conclusion may be related to the fact that the aggregation function of the message passing in the graph neural network in the code implementation of the paper is set to sum. The sum will lead to a larger feature encoding value of the amino acid with a large number of points around it, and the central amino acid. The number of amino acid points is generally more than the number of amino acid points around the edge point, which will make the feature code value of the center point larger than the feature code value of the edge point, that is, the activation value is higher, causing the neural network to understand the protein mainly based on the central amino acid of the protein The phenomenon. We set the aggregation function here to mean and then retrain the network and draw the activation value image to explore the influence of artificially setting the aggregation function on the neural network's understanding of proteins.
+
+![mean aggregation](./imgs/mean.png)
 
 ## Installation
 
@@ -33,6 +35,26 @@ Install PyTorch Scatter and PyTorch Sparse:
 
 ```
 pip install torch_scatter torch_sparse -f https://data.pyg.org/whl/torch-1.13.1+cu117.html
+```
+
+## Run
+
+The commands below are based on you being in the scripts directory.
+
+Pre-train:
+
+```
+python pre_train.py
+```
+
+Train:
+```
+python train.py
+```
+
+Inference:
+```
+python inference.py
 ```
 
 ## Datasets
