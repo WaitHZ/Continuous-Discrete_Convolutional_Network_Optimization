@@ -1,10 +1,11 @@
-# Continuous-Discrete Convolutional Network Optimization Based on Pre-Training
+# [Continuous-Discrete Convolutional Network Optimization Based on Pre-Training](https://cn.overleaf.com/read/ggqdghmzyfdz)
 
 This project is based on the use of [continuous-discrete convolutional networks](https://github.com/hehefan/Continuous-Discrete-Convolution) to predict proteins, and tries to improve the performance of the model with a variety of methods based on pre-training.
 
 First, we use the EC data set to pre-train the protein structure classification task through comparative learning, expecting to improve the effect of the neural network on the protein structure classification on the fold data set. Specifically, in the experiment, we randomly deleted 10% of the amino acids from the original protein in the EC and formed a positive and negative data pair with the original protein, used CDconv to perform pre-training encoding, and then extracted the encoding information through MLP, but did not perform classification tasks , iteratively updates the network parameters by minimizing the encoded information difference between positive and negative data pairs. The parameters trained on the EC protein dataset are used to initialize the parameters of the classification task of the fold dataset.
 
 ![pre_train](./imgs/pre_train.png)
+<img src="./imgs/pre_train.png" width="200px">
 
 Second, we try to improve the framework of the model by running CDconv with different scales in parallel to flexibly adjust the discrete convolution kernel coverage when understanding protein amino acid sequences. Specifically, for the Basic Block in the code implementation of the original paper, we changed the CDconv module with l=5 into three parallel CDconv modules with l=5, 7, and 11, and renamed the whole module as Branch Block. Experiments show that this improvement can achieve a large improvement at the beginning of the iteration, but with the training of the neural network, the final effect is gradually similar to the original network. This shows that the size of the discrete convolution kernel coverage based on the protein sequence order is not highly related to the final encoding effect of the neural network.
 
