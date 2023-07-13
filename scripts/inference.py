@@ -46,7 +46,7 @@ if __name__ == '__main__':
     args = parse_args()
     print(args)
 
-    train = FoldDataset(root=args['data_dir'], random_seed=args['seed'], split='test_family')
+    train = FoldDataset(root=args['data_dir'], random_seed=args['seed'], split='training')
     family = FoldDataset(root=args['data_dir'], random_seed=args['seed'], split='test_family')
     
     family_loader = DataLoader(family, batch_size=args['batch_size'], shuffle=False, num_workers=args['workers'])
