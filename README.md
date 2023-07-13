@@ -1,8 +1,10 @@
 # Continuous-Discrete Convolutional Network Optimization Based on Pre-Training
 
-这是浙江大学暑期课程第23组的课题的代码实现，主要基于连续离散卷积这篇论文进行改进。
+This project is based on the use of [continuous-discrete convolutional networks](https://github.com/hehefan/Continuous-Discrete-Convolution) to predict proteins, and tries to improve the performance of the model with a variety of methods based on pre-training.
 
-首先，我们使用EC数据集通过对比学习进行蛋白质结构分类任务的预训练，期望改进神经网络在fold数据集上进行蛋白质结构分类的效果。具体而言，实验中我们将原本的EC中的蛋白质随机删除10%的氨基酸后与原本的蛋白质构成正反数据对，使用CDconv进行预训练编码，随后通过MLP提取编码信息，但不执行分类任务，通过最小化正反数据对的编码信息差值来迭代更新网络参数。在EC蛋白质数据集上与训练完的参数用于fold数据集分类任务参数的初始化，实验表明***---------waitting***
+First, we use the EC data set to pre-train the protein structure classification task through comparative learning, expecting to improve the effect of the neural network on the protein structure classification on the fold data set. Specifically, in the experiment, we randomly deleted 10% of the amino acids from the original protein in the EC and formed a positive and negative data pair with the original protein, used CDconv to perform pre-training encoding, and then extracted the encoding information through MLP, but did not perform classification tasks , iteratively updates the network parameters by minimizing the encoded information difference between positive and negative data pairs. The parameters trained on the EC protein dataset are used to initialize the parameters of the classification task of the fold dataset.
+
+![](./img/pre_train.png)
 
 其次，我们尝试改进模型的框架，并行运行不同规模的CDconv，以在理解蛋白质氨基酸序列时灵活调整离散卷积核覆盖范围。具体而言，对于原论文代码实现中的Basic Block，我们将其中的l=5的CDconv模块改成了l=5，7，11的三个并行的CDconv模块，整个模块重命名为Branch Block。实验表明这种改进可以在迭代刚开始时取得较大的改进，但随着神经网络训练的进行，最终效果逐渐与原来的网络相似。这说明基于蛋白质序列顺序的离散卷积核覆盖范围的大小与神经网络最终的编码效果关联度不高。
 
