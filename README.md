@@ -4,7 +4,7 @@ This project is based on the use of [continuous-discrete convolutional networks]
 
 First, we use the EC data set to pre-train the protein structure classification task through comparative learning, expecting to improve the effect of the neural network on the protein structure classification on the fold data set. Specifically, in the experiment, we randomly deleted 10% of the amino acids from the original protein in the EC and formed a positive and negative data pair with the original protein, used CDconv to perform pre-training encoding, and then extracted the encoding information through MLP, but did not perform classification tasks , iteratively updates the network parameters by minimizing the encoded information difference between positive and negative data pairs. The parameters trained on the EC protein dataset are used to initialize the parameters of the classification task of the fold dataset.
 
-![](./img/pre_train.png)
+![pre_train](./img/pre_train.png)
 
 其次，我们尝试改进模型的框架，并行运行不同规模的CDconv，以在理解蛋白质氨基酸序列时灵活调整离散卷积核覆盖范围。具体而言，对于原论文代码实现中的Basic Block，我们将其中的l=5的CDconv模块改成了l=5，7，11的三个并行的CDconv模块，整个模块重命名为Branch Block。实验表明这种改进可以在迭代刚开始时取得较大的改进，但随着神经网络训练的进行，最终效果逐渐与原来的网络相似。这说明基于蛋白质序列顺序的离散卷积核覆盖范围的大小与神经网络最终的编码效果关联度不高。
 
