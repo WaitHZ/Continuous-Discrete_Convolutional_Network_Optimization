@@ -63,8 +63,6 @@ if __name__ == '__main__':
     net = net.to(device=device)
     net.load_()
 
-    optimizer = torch.optim.SGD(net.parameters(), weight_decay=args['weight_decay'],lr=args['lr'],momentum=args['momentum'])
-
     family_acc = test(family_loader)
 
     print(f'family_acc = {family_acc:.4f}')
