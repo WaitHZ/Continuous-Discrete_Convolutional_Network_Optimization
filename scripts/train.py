@@ -131,11 +131,10 @@ if __name__ == '__main__':
 
         print(f'Epoch:{epoch+1:03d}, Train: {train_acc:.4f}, Validation: {valid_acc:.4f}')
 
-    net.save_()  # Save complete model parameters for subsequent prediction and visualization
-
     if not os.path.exists('./vis_para'):
         os.mkdir('./vis_para')
-    net.save_('./vis_para/')  # Save complete model parameters for subsequent prediction and visualization
+    net.save_('./vis_para/')
+
 
     # Save the graph of the training process
     if not os.path.exists('./fig'):
