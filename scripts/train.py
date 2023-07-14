@@ -67,7 +67,7 @@ def test(dataloader):
 def parse_args():
     args = {
         'sequential_size': 5,
-        'data_dir': '/root/fold',
+        'data_dir': '../fold',
         'geometric_radius': 4.0,
         'kernel_channels': [24],
         'base_width': 64, 
