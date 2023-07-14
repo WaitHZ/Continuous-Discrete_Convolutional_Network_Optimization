@@ -1,6 +1,7 @@
 import torch
 from models import PreTrainModel
 from datasets import PretrainDataset
+import os
 
 import utils
 
@@ -57,5 +58,8 @@ if __name__ == '__main__':
             # print(f'batch {num_batches:.0f}, loss = {float(l):.2f}')
         
         print(f'epoch {epoch+1}, loss = {tot_loss/num_batches:.2f}')
+
+    if not os.path.exists('./para'):
+        os.mkdir('./para')
 
     net.save_parameters()
