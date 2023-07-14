@@ -37,7 +37,8 @@ def parse_args():
         'lr': 0.01,
         'weight_decay': 5e-4, 
         'momentum': 0.9,
-        'workers': 8
+        'workers': 8,
+        'seed': 0
     }
 
     return args
