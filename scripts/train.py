@@ -9,7 +9,7 @@ Our code refers to the code provided in the following article:
 }
 """
 
-
+import os
 import numpy as np
 
 import torch
@@ -133,7 +133,13 @@ if __name__ == '__main__':
 
     net.save_()  # Save complete model parameters for subsequent prediction and visualization
 
+    if not os.path.exists('./vis_para'):
+        os.mkdir('./vis_para')
+    net.save_('./vis_para/')  # Save complete model parameters for subsequent prediction and visualization
+
     # Save the graph of the training process
+    if not os.path.exists('./fig'):
+        os.mkdir('./fig')
     dd.save_fig(name='loss')
     
     print(f'Fold: {test(fold_loader):.4f}, Family: {test(family_loader):.4f}, Super: {test(super_loader):.4f}')
